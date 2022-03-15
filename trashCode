@@ -1,0 +1,19 @@
+import java.lang.*;
+ 
+public class Sudoku
+{
+  int box[][];
+  int N;
+  int n;
+  Sudoku(int N)
+  {
+    this.N=N;//9
+    n=Math.sqrt(N).intValue();
+    box=new int[N][N];
+  }
+  public void fillNumbers()
+  {
+    fillDia();
+    fillRes
+  }
+}
