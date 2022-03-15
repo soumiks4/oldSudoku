@@ -1,19 +1,134 @@
 import java.lang.*;
  
-public class Sudoku
+class Sudoku
 {
-  int box[][];
-  int N;
-  int n;
-  Sudoku(int N)
-  {
-    this.N=N;//9
-    n=Math.sqrt(N).intValue();
-    box=new int[N][N];
-  }
-  public void fillNumbers()
-  {
-    fillDia();
-    fillRes
-  }
+    int box[][];
+     int N;
+    int n;
+     Sudoku()
+    {
+        this.N=9;//9
+         n=3;
+         box=new int[N][N];
+    }
+     public void fillNumbers()
+    {
+         fillDiag();
+         fillRes(0,3);
+    }
+    void fillDiag()
+    {
+        for (int i=0;i<9;i=i+3)
+        fillBlock(i,i);
+    }
+     void fillBlock(int r,int c)
+    {
+        int temp;
+        for(int i=0;i<3;i++)
+        {
+             for(int j=0;j<3;j++)
+            {
+                do
+                 {
+                     temp=(int)Math.floor((Math.random()*10+1));
+                  
+                }
+                while(!checkPresenceBlock(r,c,temp));
+                box[r+i][c+i]=temp;
+              
+            }
+          
+         }
+    }
+    boolean checkPresence(int i,int j,int num)
+    {
+        return(checkPresenceRow(i,num)&&checkPresenceCol(j,num)&&checkPresenceBlock(i-i%3,j-j%3,num));
+    }
+    boolean checkPresenceRow(int i,int num)
+    {
+        for(int j=0;j<9;j++)
+        {
+            if(box[i][j]==num)
+                return false;
+            
+            return true;
+        }
+    }
+    boolean checkPresenceCol(int j,int num)
+    {
+        for(int i=0;i<9;i++)
+        {
+            if(box[i][j]==num)
+                return false;
+            
+            return true;
+        }
+    }
+    boolean checkPresenceBlock(int rs,int cs,int num)
+    {
+        for (int i=0;i<3;i++)
+            for(int j=0;j<3;j++)
+                if(box[rs+i][cs+j]==num)
+                    return false;
+        
+        return true;
+    }
+    boolean fillRes(int i,int j)
+    {
+        if(j>=9&&i<8)
+        {
+            i++;
+            j=0;
+        }
+        if(i>=9&&j>=9)
+            return true;
+        if(i<3)
+        {
+            if(j<3)
+            j=3;
+        }
+        else if(i<6)
+        {
+            if(j==(int)(i/3)*3)
+            j=j+3;
+        }
+        else
+        {
+            if(j==6)
+            {
+                i++;
+                j=0;
+                if(i>=9)
+                    return true;
+            }
+        }
+        for(int num=1;num<=9;num++)
+        {
+            if(checkPresence(i,j,num))
+            {
+                box[i][j]=num;
+                if(fillRes(i,j+1))
+                    return true;
+                box[i][j]=0;
+            }
+        }
+        return false;
+    }
+    public void printSudoku()
+    {
+        for (int i = 0; i<9; i++)
+        {
+            for (int j = 0; j<9; j++)
+                System.out.print(box[i][j] + " ");
+            System.out.println();
+        }
+        System.out.println();
+    }
+    public static void main(String[] args)
+    {
+        Sudoku sudoku = new Sudoku();
+        sudoku.fillNumbers();
+        sudoku.printSudoku();
+    }
 }
+ 
